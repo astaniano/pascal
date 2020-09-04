@@ -1,3 +1,4 @@
+
 program numbers2;
 type
     itemptr = ^item;
@@ -6,11 +7,11 @@ type
 	next: itemptr;
     end;
 var
-    first, tmp, last: itemptr;
+    first, last: itemptr;
 begin
-    new(tmp);
-    read(tmp^.num);
-    first := tmp;
+    new(first);
+    last := first;
+    read(last^.num);
         
     {$I-}
     while not SeekEof do
@@ -20,24 +21,21 @@ begin
             writeln('Incorrect data');
 	    halt(1);
         end;
-                
-        new(last);
-        read(last^.num);
-        tmp^.next := last;
         
-        tmp := last;
+        new(last^.next);
+        last := last^.next;
+        
+        read(last^.num);
+        last^.next := nil;
     end;
     
     {print input numbers twice}
-    tmp := first;
-    while true do
+    last := first;
+    while last <> nil do
     begin
-    	writeln(tmp^.num);
-    	writeln(tmp^.num);
-    	if tmp^.next = nil then
-    	    break;
-    	tmp := tmp^.next;
+    	writeln(last^.num);
+    	writeln(last^.num);
+    	last := last^.next;
     end;
     
 end.
-
