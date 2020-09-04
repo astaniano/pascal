@@ -42,17 +42,17 @@ begin
     end;
     n := queue.first^.data;
     tmp := queue.first;
-    if queue^.first = nil then
-        queue^.last := nil;
+    queue.first := queue.first^.next;
+    if queue.first = nil then
+        queue.last := nil;
     dispose(tmp);
     QOLGet := true;
 end;
 
 function QOLIsEmpty(var queue: QueueOfLongints): boolean;
 begin
-    QOLIsEmpty := queue^.first = nil
+    QOLIsEmpty := queue.first = nil
 end;
-
 
 
 
@@ -60,6 +60,20 @@ var
     q: QueueOfLongints;
     n: longint;
 begin
-    writeln('logic here')
-
+    QOLInit(q);
+    while not eof do
+    begin
+        readln(n);
+        QOLPut(q, n);
+    end;
+    while QOLGet(q, n) do
+	writeln(n);     
 end.
+
+
+
+
+
+
+
+
