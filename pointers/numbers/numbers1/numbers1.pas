@@ -6,14 +6,12 @@ type
 	next: itemptr;
     end;
 var
-    tmp, current: itemptr;
+    first, tmp: itemptr;
 begin
-    new(tmp);
-    read(tmp^.num);
-    tmp^.next := nil;
+    first := nil;
     
     {$I-}
-    while not eof do
+    while not SeekEof do
     begin
         if IOResult <> 0 then
         begin
@@ -21,20 +19,19 @@ begin
 	    halt(1);
         end;
                 
-        new(current);
-        read(current^.num);
-        current^.next := tmp;
+        new(tmp);
+        read(tmp^.num);
+        tmp^.next := first;
     
-        tmp := current;
+        first := tmp;
     end;
     
+    
     {print input numbers backwards}
-    while true do
+    while tmp <> nil do
     begin
-    	writeln(current^.num);
-    	if current^.next = nil then
-    	    break;
-    	current := current^.next;
+    	writeln(tmp^.num);
+    	tmp := tmp^.next;
     end;
 
 end.

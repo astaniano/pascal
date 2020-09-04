@@ -24,7 +24,7 @@ begin
         
         read(tmp^.num);
         
-        if eof then
+        if SeekEof then
         begin
             tmp^.next := nil;
             break;
