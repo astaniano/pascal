@@ -8,37 +8,28 @@ type
 var
     first, tmp, last: itemptr;
 begin
-    new(first);
-    read(first^.num);
     new(tmp);
-    first^.next := tmp;
-
-    {I-}
-    while true do
+    read(tmp^.num);
+    first := tmp;
+        
+    {$I-}
+    while not SeekEof do
     begin
         if IOResult <> 0 then
         begin
             writeln('Incorrect data');
 	    halt(1);
         end;
-        
-        read(tmp^.num);
-        
-        if SeekEof then
-        begin
-            tmp^.next := nil;
-            break;
-        end;
-        
+                
         new(last);
+        read(last^.num);
         tmp^.next := last;
+        
         tmp := last;
     end;
     
     {print input numbers twice}
-    writeln(first^.num);
-    writeln(first^.num);
-    tmp := first^.next;
+    tmp := first;
     while true do
     begin
     	writeln(tmp^.num);
@@ -47,6 +38,6 @@ begin
     	    break;
     	tmp := tmp^.next;
     end;
-
+    
 end.
 
