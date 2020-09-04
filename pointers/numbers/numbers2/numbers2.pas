@@ -1,4 +1,3 @@
-
 program numbers2;
 type
     itemptr = ^item;
