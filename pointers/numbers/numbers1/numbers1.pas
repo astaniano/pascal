@@ -10,19 +10,19 @@ var
 begin
     first := nil;
     
-    {$I-}
+    {$I-} {switch off standart exception notifications}
     while not SeekEof do
     begin
-        if IOResult <> 0 then
+        new(tmp);
+        
+        read(tmp^.num);
+        if IOResult <> 0 then {if bad input}
         begin
             writeln('Incorrect data');
 	    halt(1);
         end;
-                
-        new(tmp);
-        read(tmp^.num);
+        
         tmp^.next := first;
-    
         first := tmp;
     end;
     
